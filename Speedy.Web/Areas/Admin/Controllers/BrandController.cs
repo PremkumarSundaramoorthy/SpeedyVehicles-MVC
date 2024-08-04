@@ -6,7 +6,7 @@ using Speedy.Application.Contracts.Presistence;
 using Speedy.Domain.Models;
 using Speedy.Infrastructure.Data;
 
-namespace Speedy.Web.Controllers
+namespace Speedy.Web.Areas.Admin.Controllers
 {
     public class BrandController : Controller
     {

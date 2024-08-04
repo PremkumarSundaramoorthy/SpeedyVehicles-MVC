@@ -2,7 +2,7 @@
 using Speedy.Domain.Models;
 using System.Diagnostics;
 
-namespace Speedy.Web.Controllers
+namespace Speedy.Web.Areas.Customer.Controllers
 {
     public class HomeController : Controller
     {
