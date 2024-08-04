@@ -1,5 +1,8 @@
 using Microsoft.EntityFrameworkCore;
+using Speedy.Application.Contracts.Presistence;
 using Speedy.Infrastructure.Data;
+using Speedy.Infrastructure.Repositories;
+using Speedy.Infrastructure.UnitOfWork;
 
 namespace Speedy.Web
 {
@@ -17,6 +20,9 @@ namespace Speedy.Web
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
+
+            builder.Services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             var app = builder.Build();
 

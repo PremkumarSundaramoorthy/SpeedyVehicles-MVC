@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Speedy.Application\Speedy.Application.csproj" />
     <ProjectReference Include="..\Speedy.Domain\Speedy.Domain.csproj" />
   </ItemGroup>
 
