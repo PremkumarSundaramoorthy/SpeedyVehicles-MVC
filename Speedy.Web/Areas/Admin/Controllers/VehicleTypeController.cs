@@ -5,6 +5,7 @@ using Speedy.Domain.Models;
 
 namespace Speedy.Web.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class VehicleTypeController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;

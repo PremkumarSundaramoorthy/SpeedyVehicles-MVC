@@ -12,6 +12,8 @@ namespace Speedy.Application.Contracts.Presistence
 
         public IVehicleTypeRepository VehicleType { get; }
 
+        public IPostRepository Post { get; }
+
         Task SaveAsync();
     }
 }

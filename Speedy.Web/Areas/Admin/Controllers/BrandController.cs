@@ -8,6 +8,7 @@ using Speedy.Infrastructure.Data;
 
 namespace Speedy.Web.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class BrandController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
