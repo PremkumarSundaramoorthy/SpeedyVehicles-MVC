@@ -7,6 +7,7 @@ using Speedy.Infrastructure.UnitOfWork;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Speedy.Application.Services;
+using Speedy.Application.Services.Interface;
 
 namespace Speedy.Web
 {
@@ -73,6 +74,9 @@ namespace Speedy.Web
             builder.Services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddScoped<IEmailSender, EmailSender>();
+            builder.Services.AddScoped<IUserNameService, UserNameService>();
+
+            builder.Services.AddHttpContextAccessor();
 
 
             // Add services to the container.

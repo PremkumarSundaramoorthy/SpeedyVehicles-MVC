@@ -1,5 +1,8 @@
-﻿using Speedy.Application.Contracts.Presistence;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Speedy.Application.Contracts.Presistence;
 using Speedy.Domain.Models;
+using Speedy.Infrastructure.Common;
 using Speedy.Infrastructure.Data;
 using Speedy.Infrastructure.Repositories;
 using System;
@@ -13,10 +16,16 @@ namespace Speedy.Infrastructure.UnitOfWork
     public class UnitOfWork : IUnitOfWork
     {
         protected readonly ApplicationDbContext _dbContext;
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public UnitOfWork(ApplicationDbContext dbContext)
+        public UnitOfWork(ApplicationDbContext dbContext, UserManager<IdentityUser> userManager, 
+            IHttpContextAccessor httpContextAccessor)
         {
             _dbContext = dbContext;
+            _userManager = userManager;
+            _httpContextAccessor = httpContextAccessor;
+
             Brand = new BrandRepository(_dbContext);
             VehicleType = new VehicleTypeRepository(_dbContext);
             Post = new PostRepository(_dbContext);
@@ -35,6 +44,7 @@ namespace Speedy.Infrastructure.UnitOfWork
 
         public async Task SaveAsync()
         {
+            _dbContext.SaveCommonFields(_userManager, _httpContextAccessor);
             await _dbContext.SaveChangesAsync();
         }
     }
