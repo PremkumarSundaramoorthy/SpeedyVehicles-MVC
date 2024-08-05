@@ -1,14 +1,17 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Speedy.Application.ApplicationConstants;
 using Speedy.Application.Contracts.Presistence;
 using Speedy.Domain.Models;
 using Speedy.Infrastructure.Data;
+using System.Data;
 
 namespace Speedy.Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = CustomRole.MasterAdmin + "," + CustomRole.Admin)]
     public class BrandController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;

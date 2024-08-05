@@ -1,11 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Speedy.Application.ApplicationConstants;
 using Speedy.Application.Contracts.Presistence;
 using Speedy.Domain.Models;
+using System.Data;
 
 namespace Speedy.Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = CustomRole.MasterAdmin + "," + CustomRole.Admin)]
     public class VehicleTypeController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;

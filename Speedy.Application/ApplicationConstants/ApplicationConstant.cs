@@ -20,8 +20,8 @@ namespace Speedy.Application.ApplicationConstants
 
     public static class CustomRole
     {
-        public static string MasterAdmin = "MASTERADMIN";
-        public static string Admin = "ADMIN";
-        public static string Customer = "CUSTOMER";
+        public const string MasterAdmin = "MASTERADMIN";
+        public const string Admin = "ADMIN";
+        public const string Customer = "CUSTOMER";
     }
 }

@@ -1,14 +1,17 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Speedy.Application.ApplicationConstants;
 using Speedy.Application.Contracts.Presistence;
 using Speedy.Domain.ApplicationEnums;
 using Speedy.Domain.Models;
 using Speedy.Domain.ViewModel;
+using System.Data;
 
 namespace Speedy.Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = CustomRole.MasterAdmin + "," + CustomRole.Admin)]
     public class PostController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
