@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Speedy.Application.Contracts.Presistence;
+using Speedy.Infrastructure.Common;
 using Speedy.Infrastructure.Data;
 using Speedy.Infrastructure.Repositories;
 using Speedy.Infrastructure.UnitOfWork;
@@ -11,6 +12,38 @@ namespace Speedy.Web
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            #region Configuration for Seeding Data to Database
+
+            static async void UpdateDatabaseAsync(IHost host)
+            {
+
+                using (var scope = host.Services.CreateScope())
+                {
+                    var services = scope.ServiceProvider;
+
+                    try
+                    {
+                        var context = services.GetRequiredService<ApplicationDbContext>();
+
+                        if (context.Database.IsSqlServer())
+                        {
+                            context.Database.Migrate();
+                        }
+
+                        await SeedData.SeedDataAsync(context);
+                    }
+                    catch (Exception ex)
+                    {
+                        var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+
+                        logger.LogError(ex, "An error occurred while migrating or seeding the database.");
+                    }
+                }
+
+            }
+
+            #endregion
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
@@ -25,6 +58,8 @@ namespace Speedy.Web
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             var app = builder.Build();
+
+            UpdateDatabaseAsync(app);
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())

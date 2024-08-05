@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Speedy.Domain.Modles
+namespace Speedy.Domain.Models
 {
     public class VehicleType : BaseModel
     {

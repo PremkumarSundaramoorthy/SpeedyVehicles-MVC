@@ -10,6 +10,8 @@ namespace Speedy.Application.Contracts.Presistence
     {
         public IBrandRepository Brand { get; }
 
+        public IVehicleTypeRepository VehicleType { get; }
+
         Task SaveAsync();
     }
 }

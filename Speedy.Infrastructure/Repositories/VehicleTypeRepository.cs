@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Speedy.Application.Contracts.Presistence;
-using Speedy.Domain.Modles;
+using Speedy.Domain.Models;
 using Speedy.Infrastructure.Data;
 using System;
 using System.Collections.Generic;

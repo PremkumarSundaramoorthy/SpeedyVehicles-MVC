@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Speedy.Domain.Models;
-using Speedy.Domain.Modles;
 
 namespace Speedy.Infrastructure.Data
 {

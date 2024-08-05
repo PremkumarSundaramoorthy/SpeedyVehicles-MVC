@@ -1,4 +1,4 @@
-﻿using Speedy.Domain.Modles;
+﻿using Speedy.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
