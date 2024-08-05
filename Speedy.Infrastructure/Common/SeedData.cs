@@ -1,4 +1,7 @@
-﻿using Speedy.Domain.Models;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
+using Speedy.Application.ApplicationConstants;
+using Speedy.Domain.Models;
 using Speedy.Infrastructure.Data;
 using System;
 using System.Collections.Generic;
@@ -10,6 +13,27 @@ namespace Speedy.Infrastructure.Common
 {
     public class SeedData
     {
+        public static async Task SeedRole(IServiceProvider serviceProvider)
+        {
+            var scope = serviceProvider.CreateScope();
+
+            var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+            var roles = new List<IdentityRole>
+            {
+                new IdentityRole {Name=CustomRole.MasterAdmin,NormalizedName=CustomRole.MasterAdmin},
+                new IdentityRole {Name=CustomRole.Admin,NormalizedName=CustomRole.Admin},
+                new IdentityRole {Name=CustomRole.Customer,NormalizedName=CustomRole.Customer},
+            };
+
+            foreach (var role in roles)
+            {
+                if (!await roleManager.RoleExistsAsync(role.Name))
+                {
+                    await roleManager.CreateAsync(role);
+                }
+            }
+        }
         public static async Task SeedDataAsync(ApplicationDbContext _dbContext)
         {
             if (!_dbContext.VehicleType.Any())

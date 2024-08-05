@@ -4,12 +4,13 @@ using Speedy.Infrastructure.Common;
 using Speedy.Infrastructure.Data;
 using Speedy.Infrastructure.Repositories;
 using Speedy.Infrastructure.UnitOfWork;
+using Microsoft.AspNetCore.Identity;
 
 namespace Speedy.Web
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -54,10 +55,19 @@ namespace Speedy.Web
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
 
+            builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ApplicationDbContext>();
+
+            builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<ApplicationDbContext>();
+
             builder.Services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             var app = builder.Build();
+
+            var serviceProvider = app.Services;
+
+            await SeedData.SeedRole(serviceProvider);
 
             UpdateDatabaseAsync(app);
 
