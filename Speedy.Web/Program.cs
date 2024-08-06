@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Speedy.Application.Services;
 using Speedy.Application.Services.Interface;
+using Serilog;
 
 namespace Speedy.Web
 {
@@ -77,6 +78,15 @@ namespace Speedy.Web
             builder.Services.AddScoped<IUserNameService, UserNameService>();
 
             builder.Services.AddHttpContextAccessor();
+
+            builder.Host.UseSerilog((context, config) =>
+            {
+                config.WriteTo.File("Logs/log.txt", rollingInterval: RollingInterval.Day);
+                if (context.HostingEnvironment.IsProduction() == false)
+                {
+                    config.WriteTo.Console();
+                }
+            });
 
 
             // Add services to the container.

@@ -16,18 +16,32 @@ namespace Speedy.Web.Areas.Admin.Controllers
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly ILogger<BrandController> _logger;
 
-        public BrandController(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvironment)
+        public BrandController(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvironment, ILogger<BrandController> logger)
         {
             _unitOfWork = unitOfWork;
             _webHostEnvironment = webHostEnvironment;
+            _logger = logger;
         }
 
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            List<Brand> brandList = await _unitOfWork.Brand.GetAllAsync();
-            return View(brandList);
+            try
+            {
+                List<Brand> brands = await _unitOfWork.Brand.GetAllAsync();
+
+                _logger.LogInformation("Brand List Fetched from Database Successfully");
+
+                return View(brands);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Something went wrong");
+
+                return View();
+            }
         }
 
         [HttpGet]
