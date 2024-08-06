@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.WebUtilities;
 using Speedy.Application.Contracts.Presistence;
@@ -94,6 +95,7 @@ namespace Speedy.Web.Areas.Customer.Controllers
             return RedirectToAction("Index", new { page = 1, resetFilter = false });
         }
 
+        [Authorize]
         public async Task<IActionResult> Details(Guid id, int? page)
         {
             Post post = await _unitOfWork.Post.GetPostById(id);
